@@ -1,0 +1,59 @@
+<template name="footer">
+  <footer>
+    {{#if contact}}
+      <section id="contact-us">
+        <i class="fa fa-undo fa-2x" aria-hidden="true"></i>
+        <div>
+          <h3>Contact us! <small>Send us a message.</small></h3>
+          <form id="contactForm">
+            <div class='form-group'>
+              <label for='inputEmail'>your email</label>
+              <input type="text" class='form-control' name='email' placeholder='your email'>
+            </div>
+            <div class='form-group'>
+              <label for='inputMessage'>message</label>
+              <textarea class='form-control' name='message' placeholder='message'></textarea>
+            </div>
+            <button class='btn btn-default contactFormSubmit'>send</button>
+            {{#if success}}
+              <div class='submit-success'>Success!</div>
+            {{/if}}
+          </form>
+        </div>
+      </section>
+    {{/if}}
+
+    {{#if about}}
+      <section id="about-us">
+        <i class="fa fa-undo fa-2x" aria-hidden="true"></i>
+        <div>
+          <h3>About us.</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Quisque nec leo viverra, dignissim massa nec, vestibulum metus.
+            Proin nunc nunc, molestie et metus nec, ultricies finibus ex.
+            Vestibulum ante nibh, iaculis nec nunc quis, tempor lobortis nulla.
+            Integer quis eros et justo ullamcorper pharetra non ac urna.
+            Praesent facilisis porta felis. Duis mollis suscipit ipsum, vel faucibus
+            lectus facilisis et. Integer vitae ornare ante. Donec pretium efficitur
+            eros, sed fringilla felis auctor interdum. Sed ullamcorper efficitur nisl
+            vel ultrices.
+          </p>
+          <p>
+            Donec iaculis quis magna quis sagittis. Nunc mollis turpis vel sapien
+            vehicula, a imperdiet elit accumsan. Aenean eget turpis eget libero feugiat
+            interdum at lobortis nisl. Nullam vitae ultrices lorem, ac gravida urna.
+            Vivamus et placerat leo. Donec a pretium augue. Nulla facilisi.
+          </p>
+        </div>
+      </section>
+    {{/if}}
+
+    {{#if menu}}
+      <section id='menu'>
+        <div class='js-about'>about</div>
+        <div class='js-contact'>contact</div>
+      </section>
+    {{/if}}
+  </footer>
+</template>

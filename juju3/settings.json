@@ -1,0 +1,12 @@
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "ROOT_URL": "http://www.juju-studio.meteorapp.com",
+      "MONGO_URL": "mongodb://jujuAdmin:jujupassword123@ds027479.mlab.com:27479/juju_mongodb"
+    }
+  },
+  "AWS": {
+    "accessKeyId": "",
+    "secretAccessKey": ""
+  }
+}

@@ -1,0 +1,19 @@
+<template name="comments">
+  {{#if Template.subscriptionsReady}}
+    <h3 id="comments">comments</h3>
+    <section class='about-comments'>
+      {{> soundComments}}
+      <form id="addComment">
+        <div class='form-group'>
+          <label for='inputName'>your name</label>
+          <input type="text" class='form-control' name='name' placeholder='your name'>
+        </div>
+        <div class='form-group'>
+          <label for='inputComment'>comments</label>
+          <textarea class='form-control' name='comment' placeholder='comments'></textarea>
+        </div>
+        <button class='btn btn-default addCommentSubmit'>post</button>
+      </form>
+    </section>
+  {{/if}}
+</template>
