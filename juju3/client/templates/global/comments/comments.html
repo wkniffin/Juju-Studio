@@ -3,7 +3,6 @@
     {{#if soundSelected}}
       <h3 id="comments">comments</h3>
       <section class='about-comments'>
-        {{> soundComments}}
         <form id="addComment">
           <div class='form-group'>
             <label for='inputName'>your name</label>
@@ -15,6 +14,7 @@
           </div>
           <button class='btn btn-default addCommentSubmit'>post</button>
         </form>
+        {{> soundComments}}
       </section>
     {{/if}}
   {{/if}}

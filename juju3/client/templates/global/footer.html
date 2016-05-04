@@ -49,10 +49,46 @@
       </section>
     {{/if}}
 
+    {{#if signup}}
+      <section id="sign-up">
+        <i class="fa fa-undo fa-2x" aria-hidden="true"></i>
+        <div>
+          <h3>Signup and use the app! <small>we'll send you an email</small>
+            {{#if success}}
+              <div class='submit-success'>Success!</div>
+            {{/if}}
+          </h3>
+          <form id="signupForm">
+            <div class='form-group'>
+              <label for='inputName'>your name</label>
+              <div class='name-inputs'>
+                <input type="text" class='form-control' name='firstname' placeholder='first name'>
+                <input type="text" class='form-control' name='lastname' placeholder='last name'>
+              </div>
+            </div>
+            <div class='form-group'>
+              <label for='inputName'>username</label>
+              <input type="text" class='form-control' name='username' placeholder='username'>
+            </div>
+            <div class='form-group'>
+              <label for='inputName'>email address</label>
+              <input type="email" class='form-control' name='email' placeholder='email address'>
+            </div>
+            <div class='form-group'>
+              <label for='inputName'>password</label>
+              <input type="password" class='form-control' name='password' placeholder='password'>
+            </div>
+            <button class='btn btn-default signupFormSubmit'>send</button>
+          </form>
+        </div>
+      </section>
+    {{/if}}
+
     {{#if menu}}
       <section id='menu'>
         <div class='js-about'>about</div>
         <div class='js-contact'>contact</div>
+        <div class='js-signup'>signup</div>
       </section>
     {{/if}}
   </footer>

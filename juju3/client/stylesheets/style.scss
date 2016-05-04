@@ -1,7 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
 body {
   width: 100%;
   padding: 0px 5%;
+  font-family: 'Lato', sans-serif;
+  .gm-style {
+    font-family: 'Lato', sans-serif;
+  }
   .submit-success {
     float: right;
     color: green;
@@ -53,10 +58,15 @@ body {
           margin-top: 10px;
         }
       }
+      .play {
+        button {
+          background-color: #4F50A2;
+        }
+      }
     }
   }
   #comments {
-
+    text-align: right;
   }
   .about-comments {
     display: flex;
@@ -68,7 +78,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0px 20px;
+      padding: 0px 5%;
       blockquote {
         width: 100%;
         padding: 10px;
@@ -97,6 +107,9 @@ body {
         &:nth-child(1) {
           border-right: thin solid black;
         }
+        &:nth-child(2) {
+          border-right: thin solid black;
+        }
       }
     }
     #about-us {
@@ -121,6 +134,52 @@ body {
       }
       > div {
         width: 90%;
+      }
+    }
+    #sign-up {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      i {
+        width: 10%;
+        text-align: center;
+      }
+      > div {
+        width: 90%;
+        #signupForm {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-around;
+          .form-group {
+            &:nth-child(1) {
+              width: 30%;
+            }
+            &:nth-child(2) {
+              width: 18%;
+            }
+            &:nth-child(3) {
+              width: 28%;
+            }
+            &:nth-child(2) {
+              width: 18%;
+            }
+            .name-inputs {
+              input {
+                float: left;
+                &:nth-child(1) {
+                  margin-right: 2%;
+                  width: 48%;
+                }
+                &:nth-child(2) {
+                  width: 50%;
+                }
+              }
+            }
+          }
+          button {
+            margin-top: 25px;
+          }
+        }
       }
     }
   }

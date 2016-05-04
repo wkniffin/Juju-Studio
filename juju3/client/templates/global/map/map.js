@@ -55,7 +55,7 @@ Template.map.onCreated(function() {
         var marker = new google.maps.Marker({
           position: the_location,
           title: doc.name[0],
-          icon: 'https://s3.amazonaws.com/juju-sound/jujupin.png'
+          icon: 'https://s3.amazonaws.com/juju-sound/juju-pin-1.png'
         });
         marker.addListener('click', function() {
           windows.forEach(function(window) {
@@ -63,12 +63,15 @@ Template.map.onCreated(function() {
           });
           infowindow.open(map.instance, marker);
           Session.set('soundId', doc._id);
+          Session.set('markerOpened', true);
+          Session.set('oldSoundId', doc._id);
         });
         infowindow.addListener('click', function(event) {
           //console.log(event.target);
         });
         infowindow.addListener('closeclick', function(event) {
           Session.set('soundId', '');
+          Session.set('oldSoundId', '');
         });
         marker.setMap(map.instance);
       }
@@ -108,8 +111,5 @@ Template.map.events({
     });
 
     source.start(0);
-  },
-  'click .close-window': function(event) {
-
   }
 });
