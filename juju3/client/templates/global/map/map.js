@@ -11,7 +11,7 @@ Template.map.onCreated(function() {
     var sounds = Sounds.find();
     var lat = [];
     var lng = []; //array to find matching lat or lnges with current lat and lng
-
+    var windows = [];
     Sounds.find().observe({
       added: function(doc) {
         var this_lat = parseFloat(doc.lat);
@@ -47,23 +47,28 @@ Template.map.onCreated(function() {
         '<div class="play">'+
         "<button type='button' class='btn btn-primary map-window-play "+doc._id+"'>play</button>"+
         '</div>'+
-        '<div class="comments">'+
-        "<button type='button' class='btn btn-primary map-window-comments "+doc._id+"'>comments</button>"+
-        '</div>'+
         '</div>';
         var infowindow = new google.maps.InfoWindow({
           content: markerContent
         });
+        windows.push(infowindow);
         var marker = new google.maps.Marker({
           position: the_location,
           title: doc.name[0],
           icon: 'https://s3.amazonaws.com/juju-sound/jujupin.png'
         });
         marker.addListener('click', function() {
+          windows.forEach(function(window) {
+            window.close();
+          });
           infowindow.open(map.instance, marker);
+          Session.set('soundId', doc._id);
         });
         infowindow.addListener('click', function(event) {
           //console.log(event.target);
+        });
+        infowindow.addListener('closeclick', function(event) {
+          Session.set('soundId', '');
         });
         marker.setMap(map.instance);
       }
@@ -104,10 +109,7 @@ Template.map.events({
 
     source.start(0);
   },
-  'click .map-window-comments': function(event) {
-    event.preventDefault();
-    var the_id = event.target.classList[3];
+  'click .close-window': function(event) {
 
-    Session.set('soundId', the_id);
   }
 });
