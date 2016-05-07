@@ -20,7 +20,6 @@ simple:rest
 fourseven:scss
 twbs:bootstrap
 simple:rest-accounts-password
-kadira:flow-router
 kadira:blaze-layout
 check
 underscore
@@ -43,3 +42,4 @@ standard-minifier-css
 standard-minifier-js
 reactive-dict
 email
+promise

@@ -1,42 +1,21 @@
-let administrators = [
-  {
+// create the default admin user
+Meteor.startup(function() {
+  const administrator = {
     name: { first: 'Will', last: 'Kniffin' },
     username: 'will',
     email: 'wdkniffin@gmail.com',
     password: 'pass'
+  };
+
+  // check if the admin user already exists
+  if(!Meteor.users.findOne({'emails.address': administrator.email})) {
+    Accounts.createUser({
+      email: administrator.email,
+      username: administrator.username,
+      password: administrator.password,
+      profile: {
+        name: administrator.name
+      }
+    });
   }
-];
-
-let generateAccounts = () => {
-  _createUsers( administrators );
-};
-
-let _createUsers = ( users ) => {
-  for ( let i = 0; i < users.length; i++ ) {
-    let user       = users[ i ],
-        userExists = _checkIfUserExists( user.email );
-
-    if ( !userExists ) {
-      _createUser( user );
-    }
-  }
-};
-
-let _checkIfUserExists = ( email ) => {
-  return Meteor.users.findOne( { 'emails.address': email } );
-};
-
-let _createUser = ( user ) => {
-  Accounts.createUser({
-    email: user.email,
-    username: user.username,
-    password: user.password,
-    profile: {
-      name: user.name
-    }
-  });
-};
-
-Meteor.startup( () => {
-  generateAccounts();
 });

@@ -9,15 +9,17 @@ Template.map.onCreated(function() {
   });
   GoogleMaps.ready('map', function(map) {
     var sounds = Sounds.find();
+    //arrays to find matching lat or lnges with current lat and lng
     var lat = [];
-    var lng = []; //array to find matching lat or lnges with current lat and lng
+    var lng = [];
+    // array to store infoWindows to close later
     var windows = [];
     Sounds.find().observe({
       added: function(doc) {
         var this_lat = parseFloat(doc.lat);
         var this_lng = parseFloat(doc.lng);
+        // move pins that are at the exact same location off by a random offset
         if(lat.length > 1 && lat.indexOf(this_lat) >= 0 && lng.indexOf(this_lng) >= 0) {
-          //console.log('hey ');
           var offset = (Random.fraction())*0.00010;
           var rand = Random.fraction();
           if(rand < .25) {
@@ -58,16 +60,15 @@ Template.map.onCreated(function() {
           icon: 'https://s3.amazonaws.com/juju-sound/juju-pin-1.png'
         });
         marker.addListener('click', function() {
+          // close all other infoWindows
           windows.forEach(function(window) {
             window.close();
           });
           infowindow.open(map.instance, marker);
+          // set session values for comments section
           Session.set('soundId', doc._id);
           Session.set('markerOpened', true);
           Session.set('oldSoundId', doc._id);
-        });
-        infowindow.addListener('click', function(event) {
-          //console.log(event.target);
         });
         infowindow.addListener('closeclick', function(event) {
           Session.set('soundId', '');
@@ -82,6 +83,7 @@ Template.map.onCreated(function() {
 Template.map.helpers({
   mapOptions: function() {
     if (GoogleMaps.loaded()) {
+      // set map startup location
       var location = {'lat': 44.479981, 'lng': -73.197155};
       return {
         center: new google.maps.LatLng(location.lat, location.lng),
@@ -93,23 +95,24 @@ Template.map.helpers({
 Template.map.events({
   'click .map-window-play': function(event) {
     event.preventDefault();
+    // get the soundId from the map
     var the_id = event.target.classList[3];
 
+    // get the document from SoundBuffers
     var the_sound = SoundBuffers.findOne({soundId: the_id});
-
+    // store the binary data
     var originalBuffer = the_sound.buffer;
+    // create an arraybuffer of length originalBuffer.byteLength
     var finalBuffer = new ArrayBuffer(originalBuffer.byteLength);
+    // do some binary type manipulation
     new Uint8Array(finalBuffer).set(new Uint8Array(originalBuffer));
 
-    // var AudioContext = AudioContext || webkitAudioContext || mozAudioContext;
-    // var context = new AudioContext();
+    // load data to play
     var source = context.createBufferSource();
-
     context.decodeAudioData(finalBuffer, function(buffer) {
       source.buffer = buffer;
       source.connect(context.destination);
     });
-
     source.start(0);
   }
 });

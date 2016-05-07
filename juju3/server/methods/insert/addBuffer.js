@@ -1,27 +1,28 @@
+// Method to get audio data from s3 then store it binary data in the SoundBuffers collection
+// parameters: id - the _id of the sound's corresponding information in the Sounds collection
 Meteor.methods({
   addBuffer:function(id) {
+    // valid user required
     if(this.userId) {
       console.log(id);
-      //var s3 = new AWS.S3();
-      var Future = Npm.require('fibers/future');
 
-      //console.log(keys);
-      var params = {
+      // the params necessary for s3.getObject
+      const params = {
         Bucket: 'juju-sound',
         Key: id.soundId+'.aac'
       };
 
-      var futureGetObject = Future.wrap(s3.getObject.bind(s3));
-      var data = futureGetObject(params).wait();
+      // wrap the async s3.getObject function with Meteor.wrapAsync to give access to the
+      // data received from the function call
+      let data;
+      const getS3Object = Meteor.wrapAsync(s3.getObject, s3);
+      try {
+        data = getS3Object(params); // successful response
+      } catch (err) {
+        console.log(err, err.stack); // an error occurred
+      }
 
-      //console.log(file);
-
-      //var futureGetUrl = Future.wrap(s3.getSignedUrl.bind(s3));
-      //var url = futureGetUrl('getObject', params).wait();
-
-      var soundId = SoundBuffers.insert({soundId: id.soundId, buffer: data.Body});
-
-      //Sounds.update({_id: id.soundId}, {$set: {url: url}});
+      SoundBuffers.insert({soundId: id.soundId, date: new Date(), buffer: data.Body});
 
       return 'Success!!';
     } else {
