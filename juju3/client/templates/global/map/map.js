@@ -5,7 +5,7 @@ Meteor.startup(function() {
 Template.map.onCreated(function() {
   this.autorun(() => {
     this.subscribe('Sounds');
-    this.subscribe('SoundBuffers');
+    //this.subscribe('SoundBuffers');
   });
   GoogleMaps.ready('map', function(map) {
     var sounds = Sounds.find();
@@ -48,6 +48,9 @@ Template.map.onCreated(function() {
         '</div>'+
         '<div class="play">'+
         "<button type='button' class='btn btn-primary map-window-play "+doc._id+"'>play</button>"+
+        '</div>'+
+        '<div class="download">'+
+        "<a href='"+doc.url+"' download='"+doc.name+"'>download</a>"+
         '</div>'+
         '</div>';
         var infowindow = new google.maps.InfoWindow({
@@ -97,22 +100,35 @@ Template.map.events({
     event.preventDefault();
     // get the soundId from the map
     var the_id = event.target.classList[3];
+    //
+    // // get the document from SoundBuffers
+    // var the_sound = SoundBuffers.findOne({soundId: the_id});
+    // // store the binary data
+    // var originalBuffer = the_sound.buffer;
+    // // create an arraybuffer of length originalBuffer.byteLength
+    // var finalBuffer = new ArrayBuffer(originalBuffer.byteLength);
+    // // do some binary type manipulation
+    // new Uint8Array(finalBuffer).set(new Uint8Array(originalBuffer));
+    //
+    // // load data to play
+    // var source = context.createBufferSource();
+    // context.decodeAudioData(finalBuffer, function(buffer) {
+    //   source.buffer = buffer;
+    //   source.connect(context.destination);
+    // });
+    // source.start(0);
+    function playSound(url) {
+      var a = new Audio(url);
+      a.play();
+    }
 
-    // get the document from SoundBuffers
-    var the_sound = SoundBuffers.findOne({soundId: the_id});
-    // store the binary data
-    var originalBuffer = the_sound.buffer;
-    // create an arraybuffer of length originalBuffer.byteLength
-    var finalBuffer = new ArrayBuffer(originalBuffer.byteLength);
-    // do some binary type manipulation
-    new Uint8Array(finalBuffer).set(new Uint8Array(originalBuffer));
+    playSound(Sounds.findOne({_id: the_id}).url);
+  },
+  'click .map-window-download': function(event) {
+    event.preventDefault();
 
-    // load data to play
-    var source = context.createBufferSource();
-    context.decodeAudioData(finalBuffer, function(buffer) {
-      source.buffer = buffer;
-      source.connect(context.destination);
-    });
-    source.start(0);
+    var the_id = event.target.classList[3];
+
+
   }
 });

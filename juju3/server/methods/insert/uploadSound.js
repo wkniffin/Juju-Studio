@@ -12,8 +12,9 @@ Meteor.methods({
         date_uploaded: new_time,
       });
       var soundId = Sounds.insert(the_sound);
-      // var url = 'https://s3.amazonaws.com/juju-sound/'+soundId+'.aac';
-      // Sounds.update(soundId, {$set: {url: url}});
+      // update the document with the _id received from the upload to use in the s3 url
+      var url = 'https://s3.amazonaws.com/juju-sound/'+soundId+'.aac';
+      Sounds.update(soundId, {$set: {url: url}});
       return soundId;
     } else {
       throw new Meteor.Error('Not authorized','You must be logged in!');

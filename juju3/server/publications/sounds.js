@@ -6,7 +6,8 @@ Meteor.publish('Sounds', function() {
       'lng': 1,
       'name': 1,
       'user': 1,
-      'comment': 1
+      'comment': 1,
+      'url': 1
     }
   });
 });
