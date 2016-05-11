@@ -10,6 +10,10 @@ body {
   .btn-default {
     background-color: #4F50A2;
     color: white;
+    transition: background-color, 2s;
+    &:hover {
+      background-color: lighten($4F50A2, 20);
+    }
   }
   .submit-success {
     float: right;
